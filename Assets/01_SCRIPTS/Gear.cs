@@ -9,6 +9,8 @@ public abstract class Gear : MonoBehaviour
     public int nowCog = 1;
     public int nowCogNumber;
 
+    [SerializeField] private GameObject cogImage;
+
     private float tickAngle;
 
     protected virtual void Start()
@@ -17,17 +19,27 @@ public abstract class Gear : MonoBehaviour
         nowCogNumber = cogNumbers[nowCog - 1];
 
         tickAngle = 360 / cogs;
+
+        for(int i = 0; i < cogs; i++)
+        {
+            GameObject asdf = Instantiate(cogImage, transform.position, Quaternion.identity);
+            asdf.transform.parent = transform;
+            asdf.transform.rotation = Quaternion.Euler(new Vector3(0, 0, tickAngle * i));
+
+            if(cogNumbers[i] != 0)
+            {
+                asdf.GetComponent<SpriteRenderer>().color = Color.yellow;
+            }
+        }
     }
 
     public virtual void Tick()
     {
         nowCog++;
-        transform.Rotate(new Vector3(0,0,tickAngle));
 
         if(nowCog > cogs)
         {
             nowCog = 1;
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
             Round();
         }
 

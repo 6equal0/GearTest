@@ -4,28 +4,33 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Motor : MonoBehaviour
 {
-    [SerializeField] private Slider _slider;
     [SerializeField] private Gear[] gears;
-    [SerializeField] private float speed = 1;
+    [SerializeField] private Slider slider;
 
-    private float _nextTick;
-    private float _nowTick = 0;
+    private float speed = 1;
+
+    private void Start()
+    {
+        StartCoroutine(Spin());
+    }
 
     private void Update()
     {
-        _nextTick = 1 / _slider.value;
+        speed = 1 / slider.value * 5;
     }
 
-    private void FixedUpdate()
+    private IEnumerator Spin()
     {
-        _nowTick += Time.deltaTime * speed;
-        if(_nowTick >= _nextTick && _nextTick != 0)
+        while (true)
         {
-            _nowTick = 0;
+            print(speed);
+            transform.Rotate(new Vector3(0, 0, 0.5f));
+            yield return new WaitForSeconds(speed);
 
-            foreach(var item in gears)
+            if(transform.rotation.z >= 360)
             {
-                item.GetComponent<Gear>().Tick();
+                transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                print("0");
             }
         }
     }
