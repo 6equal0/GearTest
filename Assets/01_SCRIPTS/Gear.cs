@@ -9,6 +9,7 @@ public abstract class Gear : MonoBehaviour
     public int nowCog = 1;
     public int nowCogNumber;
     public GameObject cogImage;
+    public bool isClockwise = true;
 
     private float nowAngle;
     private float tickAngle;
@@ -20,6 +21,8 @@ public abstract class Gear : MonoBehaviour
 
         tickAngle = 360 / cogs;
         nowAngle = transform.rotation.z;
+
+        if (isClockwise) tickAngle *= -1;
 
         for(int i = 0; i< cogs; i++)
         {
