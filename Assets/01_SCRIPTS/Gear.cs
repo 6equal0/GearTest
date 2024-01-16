@@ -8,6 +8,7 @@ public abstract class Gear : MonoBehaviour
     public int cogs;
     public int nowCog = 1;
     public int nowCogNumber;
+    public GameObject cogImage;
 
     private float nowAngle;
     private float tickAngle;
@@ -19,6 +20,17 @@ public abstract class Gear : MonoBehaviour
 
         tickAngle = 360 / cogs;
         nowAngle = transform.rotation.z;
+
+        for(int i = 0; i< cogs; i++)
+        {
+            GameObject asdf = Instantiate(cogImage, transform.position, Quaternion.Euler(new Vector3(0, 0, i * tickAngle)));
+            asdf.transform.parent = this.transform;
+
+            if(cogNumbers[i] != 0)
+            {
+                asdf.GetComponent<SpriteRenderer>().color = Color.yellow;
+            }
+        }
     }
 
 
