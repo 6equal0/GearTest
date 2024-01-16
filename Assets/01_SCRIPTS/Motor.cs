@@ -4,28 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Motor : MonoBehaviour
 {
-    [SerializeField] private Slider _slider;
     [SerializeField] private Gear[] gears;
-    [SerializeField] private float speed = 1;
+    [SerializeField] private float speed = 2;
 
-    private float _nextTick;
-    private float _nowTick = 0;
-
-    private void Update()
-    {
-        _nextTick = 1 / _slider.value;
-    }
+    private float curTime = 0;
 
     private void FixedUpdate()
     {
-        _nowTick += Time.deltaTime * speed;
-        if(_nowTick >= _nextTick && _nextTick != 0)
+        curTime += Time.deltaTime;
+        if (curTime >= speed)
         {
-            _nowTick = 0;
+            curTime = 0;
 
-            foreach(var item in gears)
+            foreach(Gear item in gears)
             {
-                item.GetComponent<Gear>().Tick();
+                item.Tick();
             }
         }
     }

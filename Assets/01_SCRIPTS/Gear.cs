@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public abstract class Gear : MonoBehaviour
 {
     public int[] cogNumbers;
@@ -9,6 +9,7 @@ public abstract class Gear : MonoBehaviour
     public int nowCog = 1;
     public int nowCogNumber;
 
+    private float nowAngle;
     private float tickAngle;
 
     protected virtual void Start()
@@ -17,20 +18,23 @@ public abstract class Gear : MonoBehaviour
         nowCogNumber = cogNumbers[nowCog - 1];
 
         tickAngle = 360 / cogs;
+        nowAngle = transform.rotation.z;
     }
+
 
     public virtual void Tick()
     {
         nowCog++;
-        transform.Rotate(new Vector3(0,0,tickAngle));
+        nowAngle += tickAngle;
 
         if(nowCog > cogs)
         {
             nowCog = 1;
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            nowAngle = 0;
             Round();
         }
 
+        transform.DORotate(new Vector3(0, 0, nowAngle), 0.5f);
         nowCogNumber = cogNumbers[nowCog - 1];
 
     }
