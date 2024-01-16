@@ -1,4 +1,4 @@
-public class TestGearA : Gear
+public class TestGearB : Gear
 {
     protected override void Start()
     {
@@ -9,7 +9,7 @@ public class TestGearA : Gear
     {
         //print($"{nowCog}번째 톱니 할당 숫자: {nowCogNumber}");
 
-        text.text = "Gear 1 nothing";
+        text.text = "Gear 2 nothing";
 
         base.Tick();
     }
@@ -21,11 +21,11 @@ public class TestGearA : Gear
 
     public override void Skill()
     {
-        text.text = "Gear 1 Skill";
+        text.text = "Gear 2 Skill";
     }
 
     public override void CollaborateSkill()
     {
-        text.text = "Gear 1 collaboration";
+        text.text = "Gear 2 collaboration";
     }
 }
